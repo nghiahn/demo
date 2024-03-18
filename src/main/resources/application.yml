@@ -1,0 +1,17 @@
+
+###########---SERVER-PORT---############
+server:
+  port: 9002
+
+###########---SPRING-DATA-CONFIG---############
+spring:
+  data:
+    redis:
+      cluster:
+        nodes:
+          - "localhost:7001"
+          - "localhost:7002"
+          - "localhost:7003"
+          - "localhost:7004"
+          - "localhost:7005"
+          - "localhost:7006"
