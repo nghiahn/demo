@@ -1,20 +1,18 @@
 package org.service2.entity;
 
 import jakarta.annotation.PostConstruct;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Queue;
-import java.util.concurrent.ConcurrentLinkedDeque;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 @Service
-@Scope("singleton")
 public class MessageQueue {
 
 	private static final String QUEUE_KEY = "messageQueue";
 
-	private final Queue<Object> queue = new ConcurrentLinkedDeque<>();
+	private final BlockingQueue<Object> queue = new LinkedBlockingQueue<>();
 
 	public String getKey() {
 		return QUEUE_KEY;
@@ -25,14 +23,18 @@ public class MessageQueue {
 	}
 
 	public boolean isEmpty() {
-		return queue.isEmpty();
+		return !queue.isEmpty();
 	}
 
 	public void add(Object object) {
 		queue.add(object);
 	}
 
-	public Object take() {
+	public Object take() throws InterruptedException {
+		return queue.take();
+	}
+
+	public Object poll() {
 		return queue.poll();
 	}
 
